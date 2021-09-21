@@ -17,4 +17,4 @@ services:
     ports:
       - "1883:1883"
     volumes:
-      - "./config/mosquitto:/mosquitto/config"
+      - "./config/mosquitto:/mosquitto/config/"
