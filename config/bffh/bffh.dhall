@@ -55,7 +55,7 @@
     }
   }
 , mqtt_url = "tcp://mqtt:1883" 
-, db_path = "/var/lib/bffh/"
+, db_path = "/var/lib/bffh/db"
 , roles =
   { testrole = 
     { permissions = [ "lab.test.*" ] }
