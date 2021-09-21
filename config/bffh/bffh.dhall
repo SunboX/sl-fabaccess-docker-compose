@@ -1,13 +1,30 @@
 -- { actor_connections = [] : List { _1 : Text, _2 : Text }
-{ actor_connections = [{ _1 = "Testmachine", _2 = "Actor" }]
+{ actor_connections = 
+  -- Link up machines to actors
+  [ { _1 = "Testmachine", _2 = "Shelly_1234" }
+  , { _1 = "Another", _2 = "Bash" }
+  -- One machine can have as many actors as it wants
+  , { _1 = "Yetmore", _2 = "Bash2" }
+  , { _1 = "Yetmore", _2 = "FailBash"}
+  ]
 , actors = 
-  { Actor = { module = "Shelly", params = {=} }
+  { Shelly_1234 = { module = "Shelly", params = {=} }
+  , Bash = { module = "Process", params =
+    { cmd = "/usr/local/lib/bffh/adapters/actor.sh"
+    , args = "your ad could be here"
+    }}
+  , Bash2 = { module = "Process", params =
+    { cmd = "/usr/local/lib/bffh/adapters/actor.sh"
+    , args = "this is a different one"
+    }}
+  , FailBash = { module = "Process", params =
+    { cmd = "/usr/local/lib/bffh/adapters/fail-actor.sh" 
+    }}
   }
   , init_connections = [] : List { _1 : Text, _2 : Text }
 --, init_connections = [{ _1 = "Initiator", _2 = "Testmachine" }]
-, initiators = 
-  { Initiator = { module = "Dummy", params = {=} } 
-  }
+, initiators = {=}
+  --{ Initiator = { module = "Dummy", params = {=} } }
 , listens = 
   [ { address = "::", port = Some 59661 }
   ]
@@ -38,11 +55,20 @@
     }
   }
 , mqtt_url = "tcp://mqtt:1883" 
-, db_path = "/tmp/bffh"
+, db_path = "/var/lib/bffh/"
 , roles =
-  { Testrole = 
-    { parents = [] : List Text
-    , permissions = [] : List Text
+  { testrole = 
+    { permissions = [ "lab.test.*" ] }
+  , somerole = 
+    { parents = ["testparent"]
+    , permissions = [ "lab.some.admin" ]
+    }
+  , testparent = 
+    { permissions = 
+      [ "lab.some.write"
+      , "lab.some.read"
+      , "lab.some.disclose"
+      ]
     }
   }
 }
