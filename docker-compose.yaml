@@ -10,6 +10,7 @@ services:
       # generate a sample config.toml by running "docker run registry.gitlab.com/fabinfra/fabaccess/bffh:dev-latest --print-default > examples/config.toml" from the project root. You may have to delete the ipv6 listen section.
       - "./config/bffh:/etc/bffh"
       - "./adapters:/usr/local/lib/bffh/adapters"
+      - data:/var/lib/bffh
     links:
       - mqtt
   mqtt:
@@ -19,3 +20,5 @@ services:
       - "1883:1883"
     volumes:
       - "./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+volumes:
+  data:
