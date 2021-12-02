@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   bffh:
-    image: registry.gitlab.com/fabinfra/fabaccess/bffh:latest 
+    image: registry.gitlab.com/fabinfra/fabaccess/bffh:dev-latest 
     pull_policy: always
     restart: always
     ports:
