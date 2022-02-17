@@ -14,7 +14,7 @@ services:
     links:
       - mqtt
   mqtt:
-    image: eclipse-mosquitto:1.6.13
+    image: eclipse-mosquitto:1.6.15
     restart: always
     ports:
       - "1883:1883"
