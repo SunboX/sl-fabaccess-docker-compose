@@ -1,18 +1,31 @@
 version: "3.8"
 services:
+  #dnsrobocert:
+  # image: adferrand/dnsrobocert
+  # pull_policy: always
+  # restart: always
+  # volumes:
+  #  - "./config/cert:/etc/letsencrypt"
+  #   - "./config/dnsrobocert:/etc/dnsrobocert"
+  
   bffh:
-    image: registry.gitlab.com/fabinfra/fabaccess/bffh:latest 
+    image: registry.gitlab.com/fabinfra/fabaccess/bffh:v0.3-pre
     pull_policy: always
     restart: always
     ports:
-      - "59661:59661"
+      - "59666:59661"
+    entrypoint: ["sh", "-c", "bffhd -c /etc/bffh/bffh.dhall --load=/etc/bffh/users.toml; bffhd -c /etc/bffh/bffh.dhall"]
+    environment:
+      - "RUST_LOG=debug"
     volumes:
       # generate a sample config.toml by running "docker run registry.gitlab.com/fabinfra/fabaccess/bffh:dev-latest --print-default > examples/config.toml" from the project root. You may have to delete the ipv6 listen section.
       - "./config/bffh:/etc/bffh"
       - "./adapters:/usr/local/lib/bffh/adapters"
+      - "./config/cert:/etc/letsencrypt"
       - data:/var/lib/bffh
     links:
       - mqtt
+
   mqtt:
     image: eclipse-mosquitto:1.6.15
     restart: always
@@ -20,5 +33,7 @@ services:
       - "1883:1883"
     volumes:
       - "./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+
 volumes:
   data:
+
