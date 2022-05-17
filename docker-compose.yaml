@@ -9,14 +9,14 @@ services:
   #   - "./config/dnsrobocert:/etc/dnsrobocert"
   
   bffh:
-    image: registry.gitlab.com/fabinfra/fabaccess/bffh:v0.3-pre
+    image: registry.gitlab.com/fabinfra/fabaccess/bffh:dev-latest
     pull_policy: always
     restart: always
     ports:
-      - "59666:59661"
+      - "59661:59661"
     entrypoint: ["sh", "-c", "bffhd -c /etc/bffh/bffh.dhall --load=/etc/bffh/users.toml; bffhd -c /etc/bffh/bffh.dhall"]
     environment:
-      - "RUST_LOG=debug"
+      - "BFFH_LOG=debug"
     volumes:
       # generate a sample config.toml by running "docker run registry.gitlab.com/fabinfra/fabaccess/bffh:dev-latest --print-default > examples/config.toml" from the project root. You may have to delete the ipv6 listen section.
       - "./config/bffh:/etc/bffh"
