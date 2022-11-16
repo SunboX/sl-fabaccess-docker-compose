@@ -9,7 +9,7 @@ services:
   #   - "./config/dnsrobocert:/etc/dnsrobocert"
   
   bffh:
-    image: registry.gitlab.com/fabinfra/fabaccess/bffh:dev-latest
+    image: registry.gitlab.com/fabinfra/fabaccess/bffh:development
     pull_policy: always
     restart: always
     ports:
