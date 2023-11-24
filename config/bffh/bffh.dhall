@@ -45,12 +45,11 @@
     -- roles = ./roles.dhall
     
 
+    -- Name of Space
+    spacename = "FabAccess Local Test",
 
-
-
-
-
-
+    -- URL of BFFH Instance
+    instanceurl = "localtest.fab-access.org",
 
 
 
