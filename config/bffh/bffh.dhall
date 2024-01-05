@@ -283,11 +283,25 @@
         },
     },
     
-    actors = {=},
+    actors = {
+        tasmota_F09A4C = {
+            module = "Process",
+            params = {
+                cmd = "/usr/local/lib/bffh/adapters/tasmota/main.py",
+                args = "--host mqtt --tasmota F09A4C"
+            },
+        },
+    },
 
-    actor_connections = [] : List { machine : Text, actor : Text },
+    actor_connections = [
+        {
+            machine = "MachineA1", 
+            actor = "tasmota_F09A4C"
+	},
+    ] : List { machine : Text, actor : Text },
 
     initiators = {=},
 
     init_connections = [] : List { machine : Text, initiator : Text },
 }
+
